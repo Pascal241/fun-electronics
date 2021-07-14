@@ -1,0 +1,25 @@
+//these define the pin connections
+const int ledPin=13; //the code will flash the LED connected to digital pin 13
+const int sensorPin= 0; //Sensor pin connects to analog pin A0
+
+int level; //the variable that will hold the light level reading
+
+const int threshold=400; //this represents the threshold voltage in bits. If voltage converted in bits is below 400, this triggers the LED to turn on
+                         //la tension peut évoluer de 0 à 5 V, celle ci est codée entre 0 et 1024 bits
+void setup() {
+pinMode (ledPin, OUTPUT); //sets digital pin 13 as output
+pinMode (sensorPin, INPUT); //sets the digital pin 0 as input
+Serial.begin(9600); //sets the baud rate at 9600 so we can check the values the sensor is obtaining on the Serial Monitor
+}
+
+void loop(){
+level= analogRead(sensorPin); //the sensor takes readings from analog pin A0
+if (level < threshold){
+digitalWrite(ledPin, HIGH); //if the light level is below the threshold level, the LED turns on
+delay(50); //delays 50ms
+digitalWrite(ledPin, LOW);
+}
+else{
+digitalWrite(ledPin, LOW); //otherwise, if the light level is above the threshold level, the LED is off
+}
+}
